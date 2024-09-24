@@ -28,7 +28,7 @@ class RoleManager
                     return $next($request);
                 }
                 break;
-            case 'user':
+            case 'customer':
                 if($authUserRole == 1){
                     return $next($request);
                 }

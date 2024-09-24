@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('admin.car')
+    @include('admin.components.createcar')
 @endsection
