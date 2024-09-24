@@ -20,9 +20,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'number',
         'role',
         'password',
     ];
+    
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,5 +44,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'number' => 'string',
     ];
+
+        // Role Constants
+        const ADMIN = 0;
+        const CUSTOMER = 1;
+    
+        /**
+         * Check if the user is an Admin
+         */
+        public function isAdmin()
+        {
+            return $this->role === self::ADMIN;
+        }
+    
+        /**
+         * Check if the user is a Customer
+         */
+        public function isCustomer()
+        {
+            return $this->role === self::CUSTOMER;
+        }
+    
+        /**
+         * User has many rentals
+         */
+        public function rentals()
+        {
+            return $this->hasMany(Rental::class);
+        }
+    
 }

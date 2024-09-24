@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('admin');
-})->middleware(['auth', 'verified', 'rolemanager:admin'])->name('admin');
+// Route::get('/admin/dashboard', function () {
+//     return view('admin.admindashboard');
+// })->middleware(['auth', 'verified', 'rolemanager:admin'])->name('admin');
+
+Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () {
+    // Admin Dashboard Route
+    Route::get('/admin/dashboard', function () { 
+        return view('admin.admindashboard');
+    })->name('admin');
+
+    // Manage Cars Routes
+    Route::resource('admin/cars', CarController::class);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -31,5 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';
