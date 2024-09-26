@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    {{ __('Profile') }}
+@endsection
+
 @section('content')
     <x-slot name="header">
         <h2 class="font-weight-bold text-xl text-dark">

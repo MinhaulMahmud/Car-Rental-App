@@ -36,7 +36,7 @@ class CustomerController extends Controller
     }
 
     // Update customer details
-    public function update(Request $request, $id)
+    public function updated(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -50,6 +50,28 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')->with('status', 'Customer updated successfully.');
     }
 
+    public function update(Request $request, User $customer)
+{
+    // Validate the incoming request data
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $customer->id,
+        'number' => 'required|string|max:15', // Adjust validation rules as needed
+    ]);
+
+    // Update the customer's information
+    $customer->name = $request->name;
+    $customer->email = $request->email;
+    $customer->number = $request->number;
+
+    // Save the updated customer information
+    $customer->save();
+
+    // Redirect back to the customer index page with a success message
+    return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
+}
+
+
     // Delete a customer
     public function destroy($id)
     {
@@ -61,9 +83,10 @@ class CustomerController extends Controller
 
     // Show the rental history of a customer
     public function showRentalHistory($id)
-    {
-        $customer = User::findOrFail($id);
-        $rentalHistory = Rental::where('id', $id)->with('car')->get();
-        return view('admin.customers.rental-history', compact('customer', 'rentalHistory'));
-    }
+{
+    $customer = User::findOrFail($id);
+    $rentalHistory = Rental::where('user_id', $id)->with('car')->get();
+    return view('admin.customers.rental-history', compact('customer', 'rentalHistory'));
+}
+
 }

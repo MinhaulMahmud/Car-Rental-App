@@ -11,7 +11,7 @@ class CreateRentalsTable extends Migration
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('car_id')->constrained('cars');
+            $table->foreignId('car_id')->constrained('cars')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('total_cost', 8, 2);

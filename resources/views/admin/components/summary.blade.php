@@ -1,119 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Dashboard Overview</title>
-	<link rel="stylesheet" href="style.css">
-</head>
-<body>
-	<div class="dashboard-container">
-		<div class="header">
-			<h1>Dashboard Overview</h1>
-		</div>
-		<div class="key-statistics">
-			<h2>Key Statistics</h2>
-			<ul>
-				<li>
-					<span>Total Number of Cars:</span>
-					<span class="stat-value">500</span>
-					<div class="stat-icon">
-						<i class="fas fa-car"></i>
-					</div>
-				</li>
-				<li>
-					<span>Number of Available Cars:</span>
-					<span class="stat-value">200</span>
-					<div class="stat-icon">
-						<i class="fas fa-car"></i>
-					</div>
-				</li>
-				<li>
-					<span>Total Number of Rentals:</span>
-					<span class="stat-value">1000</span>
-					<div class="stat-icon">
-						<i class="fas fa-chart-line"></i>
-					</div>
-				</li>
-				<li>
-					<span>Total Earnings from Rentals:</span>
-					<span class="stat-value">$50,000</span>
-					<div class="stat-icon">
-						<i class="fas fa-dollar-sign"></i>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
+<div class="container mt-4">
+        <h1 class="mb-4">Admin Dashboard</h1>
 
-	<script src="https://kit.fontawesome.com/your-font-awesome-kit-id.js"></script>
-</body>
-<style>
-    body {
-  background-color: #f7f7f7; /* light grey background */
-}
+        <div class="row">
+            <!-- Total Number of Cars -->
+            <div class="col-md-3 mb-4">
+                <div class="card border-primary text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Cars</h5>
+                        <p class="card-text display-4">{{ $totalCars }}</p>
+                    </div>
+                </div>
+            </div>
 
-.dashboard-container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
+            <!-- Number of Available Cars -->
+            <div class="col-md-3 mb-4">
+                <div class="card border-success text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Available Cars</h5>
+                        <p class="card-text display-4">{{ $availableCars }}</p>
+                    </div>
+                </div>
+            </div>
 
-.header {
-  background-color: #337ab7; /* dark blue background */
-  color: #fff;
-  padding: 10px;
-  border-radius: 10px 10px 0 0;
-}
+            <!-- Total Number of Rentals -->
+            <div class="col-md-3 mb-4">
+                <div class="card border-warning text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Rentals</h5>
+                        <p class="card-text display-4">{{ $totalRentals }}</p>
+                    </div>
+                </div>
+            </div>
 
-h1, h2 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.key-statistics {
-  margin-top: 20px;
-}
-
-.key-statistics ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.key-statistics li {
-  margin-bottom: 20px;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.key-statistics li:last-child {
-  border-bottom: none;
-}
-
-.key-statistics li span {
-  display: inline-block;
-  width: 200px;
-  font-weight: bold;
-  color: #666;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: bold;
-  color: #337ab7;
-}
-
-.stat-icon {
-  float: right;
-  font-size: 24px;
-  color: #337ab7;
-}
-
-.stat-icon i {
-  margin-right: 10px;
-}
-</style>
-</html>
+            <!-- Total Earnings from Rentals -->
+            <div class="col-md-3 mb-4">
+                <div class="card border-info text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Earnings</h5>
+                        <p class="card-text display-4">${{ number_format($totalEarnings, 2) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

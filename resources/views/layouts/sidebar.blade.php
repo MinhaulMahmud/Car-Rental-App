@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="index.html">
-          <span class="align-middle">CDI Car Rentals</span>
+				<a class="sidebar-brand">
+          <span class="align-middle">Car Rentals</span>
         </a>
 
 				<ul class="sidebar-nav">
@@ -44,7 +44,13 @@
             			</a>
 					</li>
 
-					<li class="sidebar-item">
+					<li class="sidebar-item {{ request()->routeIs('rentals.index')?'active' : '' }}">
+						<a class="sidebar-link" href="{{ route('rentals.index')}}">
+              				<i class="align-middle" data-feather="user"></i> <span class="align-middle">All Rentals</span>
+            			</a>
+					</li>
+
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="ui-typography.html">
               				<i class="align-middle" data-feather="align-left"></i> <span class="align-middle">Typography</span>
             			</a>
@@ -54,9 +60,9 @@
 						<a class="sidebar-link" href="icons-feather.html">
               				<i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
             			</a>
-					</li>
+					</li> -->
 
-					<li class="sidebar-header">
+					<!-- <li class="sidebar-header">
 						Plugins & Addons
 					</li>
 
@@ -71,7 +77,7 @@
               				<i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
            				 </a>
 					</li>
-				</ul>
+				</ul> -->
 
 				<!-- <div class="sidebar-cta">
 					<div class="sidebar-cta-content">

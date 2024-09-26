@@ -1,0 +1,28 @@
+body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #e8eaf6 100%);
+    min-height: 100vh;
+}
+.card {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.card-img-top {
+    transition: transform 0.3s ease;
+}
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+.price-slider {
+    width: 100%;
+}
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

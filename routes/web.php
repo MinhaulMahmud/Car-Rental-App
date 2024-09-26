@@ -2,19 +2,12 @@
 
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\RentalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Frontend\CarController as FrontendCarController;
+use App\Http\Controllers\Admin\RentalController as AdminRentalController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,13 +37,32 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
     Route::delete('/admin/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
     Route::get('/admin/customers/{customer}/rental-history', [CustomerController::class, 'showRentalHistory'])->name('customers.rental-history');
     
+    // Manage Rentals Routes
+    Route::get('/admin/rentals', [AdminRentalController::class, 'index'])->name('rentals.index');
+    Route::get('/admin/rentals/{rental}/edit', [AdminRentalController::class, 'edit'])->name('rentals.edit');
+    Route::post('/admin/rentals/{rental}', [AdminRentalController::class, 'update'])->name('rentals.update');
+    Route::delete('/admin/rentals/{rental}', [AdminRentalController::class, 'destroy'])->name('rentals.destroy');
     
 });
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'rolemanager:customer'])->name('dashboard');
+
+
+// Frontend routes
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+
+// Rental routes for customers
+Route::middleware(['auth', 'rolemanager:customer'])->group(function () {
+    Route::get('/rentals/{car_id}/book', [RentalController::class, 'book'])->name('rentals.book.form');
+    Route::get('/rentals/dashboard', action: [RentalController::class, 'index'])->name('rentals.dashboard');
+    Route::post('/rentals/{car_id}/book', [RentalController::class, 'store'])->name('rentals.book');
+    Route::get('/rentals/{id}/cancel', [RentalController::class, 'cancel'])->name('rentals.cancel');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
