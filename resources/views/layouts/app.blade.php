@@ -21,6 +21,39 @@
 	<link href="{{ asset('admin-assets/css/app.css')}}" rel="stylesheet">
 	
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<!-- <style>
+        .card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #007bff, #6f42c1);
+        }
+
+        .bg-gradient-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .bg-gradient-warning {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+        }
+
+        .bg-gradient-info {
+            background: linear-gradient(135deg, #17a2b8, #6610f2);
+        }
+
+        .icon-size {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+    </style> -->
 </head>
 
 <body>

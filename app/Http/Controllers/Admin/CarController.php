@@ -20,7 +20,7 @@ class CarController extends Controller
         return view('admin.managecar');
     }
 
-    public function storeOrUpdate(Request $request)
+    public function store(Request $request)
     {
         // Validate the input fields
         $validatedData = $request->validate([
@@ -33,34 +33,7 @@ class CarController extends Controller
             'availability' => 'required|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // max 2MB image size
         ]);
-
-        if ($request->car_id) {
-            // If car_id exists, we're updating the car
-            $car = Car::findOrFail($request->car_id);
-            $car->update($validatedData);
-
-            // Handle file upload for image update
-            if ($request->hasFile('image')) {
-                // Define the custom upload path
-                $uploadPath = public_path('admin-assets/img/car img');
-
-                // Create directory if it doesn't exist
-                if (!File::exists($uploadPath)) {
-                    File::makeDirectory($uploadPath, 0755, true, true);
-                }
-
-                // Get the uploaded file and store it
-                $file = $request->file('image');
-                $filename = time() . '-' . $file->getClientOriginalName();
-                $file->move($uploadPath, $filename);
-
-                // Save the relative path to the database
-                $car->image = 'admin-assets/img/car img/' . $filename;
-                $car->save();
-            }
-
-            return redirect()->route('cars.index')->with('status', 'Car updated successfully.');
-        } else {
+        
             // Otherwise, create a new car
             $car = Car::create($validatedData);
 
@@ -84,8 +57,8 @@ class CarController extends Controller
                 $car->save();
             }
 
-            return redirect()->route('cars.index')->with('status', 'Car added successfully.');
-        }
+            return redirect()->route('admin.cars.index')->with('status', 'Car added successfully.');
+        
     }
 
     public function edit(Car $car)
@@ -130,7 +103,7 @@ class CarController extends Controller
             $car->save();
         }
 
-        return redirect()->route('cars.index')->with('status', 'Car updated successfully!');
+        return redirect()->route('admin.cars.index')->with('status', 'Car updated successfully!');
     }
 
     public function destroy(Car $car)

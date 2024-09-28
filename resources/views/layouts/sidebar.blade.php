@@ -26,14 +26,14 @@
 						Components
 					</li>
 
-					<li class="sidebar-item {{ request()->routeIs('cars.index')?'active' : '' }}">
-						<a class="sidebar-link" href="{{ route('cars.index')}}">
+					<li class="sidebar-item {{ request()->routeIs('admin.cars.index')?'active' : '' }}">
+						<a class="sidebar-link" href="{{ route('admin.cars.index')}}">
               				<i class="align-middle" data-feather="list"></i> <span class="align-middle">Car List</span>
             			</a>
 					</li>
 
-					<li class="sidebar-item {{ request()->routeIs('cars.create')?'active' : '' }}">
-						<a class="sidebar-link" href="{{ route('cars.create')}}">
+					<li class="sidebar-item {{ request()->routeIs('admin.cars.create')?'active' : '' }}">
+						<a class="sidebar-link" href="{{ route('admin.cars.create')}}">
               				<i class="align-middle" data-feather="grid"></i> <span class="align-middle">Register Car</span>
             			</a>
 					</li>

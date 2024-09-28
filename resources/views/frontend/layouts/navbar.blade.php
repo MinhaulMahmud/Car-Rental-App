@@ -15,6 +15,9 @@
             <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               About
             </a>
+            <a href="{{ route('cars.index') }}" class="{{ request()->routeIs('cars.index') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+              Listed Cars
+            </a>
             @auth
             <a href="{{ route('rentals.dashboard') }}" class="{{ request()->routeIs('rentals.dashboard') ? 'bg-gray-900 text-white' : 'text-gray-300' }} hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
               My Bookings

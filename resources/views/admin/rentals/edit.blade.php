@@ -8,9 +8,9 @@
 <div class="container mt-5">
     <h2 class="mb-4">Edit Rental</h2>
 
-    <form action="{{ route('rentals.update', $rental->id) }}" method="POST">
+    <form action="{{ route('rentals.update', $rental->id) }}" method="PUT">
         @csrf
-        @method('PUT')
+        @method('PUt')
 
         <div class="mb-3">
             <label for="customer_name" class="form-label">Customer</label>

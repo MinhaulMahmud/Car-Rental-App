@@ -50,7 +50,7 @@ class RentalController extends Controller
         // Update the rental
         $rental->update($validatedData);
 
-        return redirect()->route('admin.rentals.index')->with('status', 'Rental updated successfully. Total cost: ' . $total_cost);
+        return redirect()->route('rentals.index')->with('status', 'Rental updated successfully. Total cost: ' . $total_cost);
     }
 
     public function destroy(Rental $rental)

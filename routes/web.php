@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\CarController as FrontendCarController;
 use App\Http\Controllers\Admin\RentalController as AdminRentalController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,12 +23,12 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
     Route::get('/admin/dashboard', [CustomerController::class, 'dashboard'])->name('admin');
 
     // Manage Cars Routes
-    Route::get('/admin/cars', [CarController::class, 'index'])->name('cars.index');
-    Route::get('/admin/cars/create', [CarController::class, 'create'])->name('cars.create');
-    Route::post('/admin/cars', [CarController::class, 'storeOrUpdate'])->name('cars.store');
-    Route::get('/admin/cars/{car}/edit', [CarController::class, 'edit'])->name('cars.edit');
-    Route::put('/admin/cars/{car}', [CarController::class, 'update'])->name('cars.update');
-    Route::delete('/admin/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
+    Route::get('/admin/cars', [CarController::class, 'index'])->name('admin.cars.index');
+    Route::get('/admin/cars/create', [CarController::class, 'create'])->name('admin.cars.create');
+    Route::post('/admin/cars', [CarController::class, 'store'])->name('admin.cars.store');
+    Route::get('/admin/cars/{car}/edit', [CarController::class, 'edit'])->name('admin.cars.edit');
+    Route::put('/admin/cars/{car}', [CarController::class, 'update'])->name('admin.cars.update');
+    Route::delete('/admin/cars/{car}', [CarController::class, 'destroy'])->name('admin.cars.destroy');
 
     // Manage Customer Routes
    
@@ -40,7 +41,7 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
     // Manage Rentals Routes
     Route::get('/admin/rentals', [AdminRentalController::class, 'index'])->name('rentals.index');
     Route::get('/admin/rentals/{rental}/edit', [AdminRentalController::class, 'edit'])->name('rentals.edit');
-    Route::post('/admin/rentals/{rental}', [AdminRentalController::class, 'update'])->name('rentals.update');
+    Route::put('/admin/rentals/{rental}', [AdminRentalController::class, 'update'])->name('rentals.update');
     Route::delete('/admin/rentals/{rental}', [AdminRentalController::class, 'destroy'])->name('rentals.destroy');
     
 });
@@ -52,7 +53,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+Route::get('/cars', [FrontendCarController::class, 'index'])->name('cars.index');
+Route::get('/cars/{id}', [FrontendCarController::class, 'show'])->name('frontend.cars.show');
 
 // Rental routes for customers
 Route::middleware(['auth', 'rolemanager:customer'])->group(function () {
@@ -60,6 +62,7 @@ Route::middleware(['auth', 'rolemanager:customer'])->group(function () {
     Route::get('/rentals/dashboard', action: [RentalController::class, 'index'])->name('rentals.dashboard');
     Route::post('/rentals/{car_id}/book', [RentalController::class, 'store'])->name('rentals.book');
     Route::get('/rentals/{id}/cancel', [RentalController::class, 'cancel'])->name('rentals.cancel');
+
 });
 
 

@@ -28,8 +28,8 @@
                         <td>${{ $car->daily_rent_price }}</td>
                         <td>{{ $car->availability }}</td>
                         <td>
-                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('admin.cars.edit', $car->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('admin.cars.destroy', $car->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this car?');">Delete</button>

@@ -9,24 +9,41 @@ use Illuminate\Http\Request;
 class CarController extends Controller
 {
     public function index(Request $request)
-    {
-        $cars = Car::query();
+{
+    $query = Car::query();
 
-        // Filters for car type, brand, daily rent price
-        if ($request->has('car_type')) {
-            $cars->where('car_type', $request->car_type);
-        }
-        if ($request->has('brand')) {
-            $cars->where('brand', $request->brand);
-        }
-        if ($request->has('daily_rent_price')) {
-            $cars->where('daily_rent_price', '<=', $request->daily_rent_price);
-        }
-
-        $cars = $cars->where('availability', true)->get();
-
-        return view('frontend.cars', compact('cars'));
+    // Handle search
+    if ($request->has('search') && $request->search != '') {
+        $query->where(function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('brand', 'like', '%' . $request->search . '%')
+              ->orWhere('car_type', 'like', '%' . $request->search . '%');
+        });
     }
 
-    
+    // Handle sorting
+    if ($request->has('sort') && $request->sort != '') {
+        if ($request->sort == 'price_asc') {
+            $query->orderBy('daily_rent_price', 'asc');
+        } elseif ($request->sort == 'price_desc') {
+            $query->orderBy('daily_rent_price', 'desc');
+        } elseif ($request->sort == 'name_asc') {
+            $query->orderBy('name', 'asc');
+        } elseif ($request->sort == 'name_desc') {
+            $query->orderBy('name', 'desc');
+        }
+    }
+
+    // Fetch cars with pagination
+    $cars = $query->where('availability', true)->paginate(10); // Replace get() with paginate()
+
+    return view('frontend.cars', compact('cars'));
+}
+
+
+    public function show($id)
+    {
+        $car = Car::findOrFail($id);  // Find the car by ID or throw a 404 error if not found
+        return view('frontend.car_details', compact('car'));
+    }
 }
