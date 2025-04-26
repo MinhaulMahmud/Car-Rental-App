@@ -9,11 +9,25 @@
 						Main
 					</li>
 
+					@if(auth()->user()->role === 'admin')
 					<li class="sidebar-item {{ request()->routeIs('admin')?'active' : ''}}">
 						<a class="sidebar-link" href="{{ route('admin') }}">
               				<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
             			</a>
 					</li>
+					@elseif(auth()->user()->role === 'owner')
+					<li class="sidebar-item {{ request()->routeIs('owner.dashboard')?'active' : ''}}">
+						<a class="sidebar-link" href="{{ route('owner.dashboard') }}">
+              				<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            			</a>
+					</li>
+					@elseif(auth()->user()->role === 'fleet_provider')
+					<li class="sidebar-item {{ request()->routeIs('fleet.dashboard')?'active' : ''}}">
+						<a class="sidebar-link" href="{{ route('fleet.dashboard') }}">
+              				<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+            			</a>
+					</li>
+					@endif
 
 					<li class="sidebar-item {{ request()->routeIs('profile.edit')?'active' : '' }}">
 						<a class="sidebar-link" href="{{ route('profile.edit')}}">
@@ -26,6 +40,7 @@
 						Components
 					</li>
 
+					@if(auth()->user()->role === 'admin')
 					<li class="sidebar-item {{ request()->routeIs('admin.cars.index')?'active' : '' }}">
 						<a class="sidebar-link" href="{{ route('admin.cars.index')}}">
               				<i class="align-middle" data-feather="list"></i> <span class="align-middle">Car List</span>
@@ -49,6 +64,19 @@
               				<i class="align-middle" data-feather="user"></i> <span class="align-middle">All Rentals</span>
             			</a>
 					</li>
+					@elseif(auth()->user()->role === 'owner')
+					<li class="sidebar-item {{ request()->routeIs('owner.cars.create')?'active' : '' }}">
+						<a class="sidebar-link" href="{{ route('owner.cars.create')}}">
+              				<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Add New Car</span>
+            			</a>
+					</li>
+					@elseif(auth()->user()->role === 'fleet_provider')
+					<li class="sidebar-item {{ request()->routeIs('fleet.cars.create')?'active' : '' }}">
+						<a class="sidebar-link" href="{{ route('fleet.cars.create')}}">
+              				<i class="align-middle" data-feather="plus-circle"></i> <span class="align-middle">Add New Car</span>
+            			</a>
+					</li>
+					@endif
 
 					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" href="ui-typography.html">

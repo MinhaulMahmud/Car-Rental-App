@@ -7,6 +7,8 @@ use App\Http\Controllers\Frontend\RentalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\CarController as FrontendCarController;
 use App\Http\Controllers\Admin\RentalController as AdminRentalController;
+use App\Http\Controllers\OwnerDashboardController;
+use App\Http\Controllers\FleetProviderDashboardController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -65,7 +67,26 @@ Route::middleware(['auth', 'rolemanager:customer'])->group(function () {
 
 });
 
+// Owner Dashboard Routes
+Route::middleware(['auth', 'rolemanager:owner'])->group(function () {
+    Route::get('/owner/dashboard', [OwnerDashboardController::class, 'index'])->name('owner.dashboard');
+    Route::get('/owner/cars/create', [OwnerDashboardController::class, 'create'])->name('owner.cars.create');
+    Route::post('/owner/cars', [OwnerDashboardController::class, 'store'])->name('owner.cars.store');
+    Route::put('/owner/cars/{car}', [OwnerDashboardController::class, 'update'])->name('owner.cars.update');
+    Route::delete('/owner/cars/{car}', [OwnerDashboardController::class, 'destroy'])->name('owner.cars.destroy');
+});
 
+// Fleet Provider Dashboard Routes
+Route::middleware(['auth', 'rolemanager:fleet_provider'])->group(function () {
+    Route::get('/fleet/dashboard', [FleetProviderDashboardController::class, 'index'])->name('fleet.dashboard');
+    Route::get('/fleet/cars/create', [FleetProviderDashboardController::class, 'create'])->name('fleet.cars.create');
+    Route::get('/fleet/cars/{car}', [FleetProviderDashboardController::class, 'carDetails'])->name('fleet.cars.details');
+    Route::get('/fleet/cars/{car}/edit', [FleetProviderDashboardController::class, 'edit'])->name('fleet.cars.edit');
+    Route::post('/fleet/cars', [FleetProviderDashboardController::class, 'store'])->name('fleet.cars.store');
+    Route::put('/fleet/cars/{car}', [FleetProviderDashboardController::class, 'update'])->name('fleet.cars.update');
+    Route::put('/fleet/cars/{car}/availability', [FleetProviderDashboardController::class, 'updateAvailability'])->name('fleet.cars.updateAvailability');
+    Route::delete('/fleet/cars/{car}', [FleetProviderDashboardController::class, 'destroy'])->name('fleet.cars.destroy');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

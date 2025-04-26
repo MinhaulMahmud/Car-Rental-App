@@ -48,8 +48,10 @@ class User extends Authenticatable
     ];
 
         // Role Constants
-        const ADMIN = 0;
-        const CUSTOMER = 1;
+        const ADMIN = 'admin';
+        const CUSTOMER = 'customer';
+        const ROLE_OWNER = 'owner';
+        const ROLE_FLEET_PROVIDER = 'fleet_provider';
     
         /**
          * Check if the user is an Admin
@@ -73,6 +75,30 @@ class User extends Authenticatable
         public function rentals()
         {
             return $this->hasMany(Rental::class);
+        }
+
+        /**
+         * User has many cars
+         */
+        public function cars()
+        {
+            return $this->hasMany(Car::class);
+        }
+
+        /**
+         * Check if the user is an Owner
+         */
+        public function isOwner()
+        {
+            return $this->role === self::ROLE_OWNER;
+        }
+
+        /**
+         * Check if the user is a Fleet Provider
+         */
+        public function isFleetProvider()
+        {
+            return $this->role === self::ROLE_FLEET_PROVIDER;
         }
     
 }

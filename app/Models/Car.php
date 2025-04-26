@@ -23,6 +23,7 @@ class Car extends Model
         'daily_rent_price',
         'availability',
         'image',
+        'user_id',
     ];
 
     /**
@@ -31,5 +32,13 @@ class Car extends Model
     public function rentals()
     {
         return $this->hasMany(Rental::class);
+    }
+
+    /**
+     * Relationship with user
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

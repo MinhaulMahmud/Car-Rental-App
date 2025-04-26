@@ -12,8 +12,34 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    @auth
+                        @if(auth()->user()->isAdmin())
+                            <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
+                                {{ __('Admin Dashboard') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if(auth()->user()->isOwner())
+                            <x-nav-link :href="route('owner.dashboard')" :active="request()->routeIs('owner.dashboard')">
+                                {{ __('Owner Dashboard') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if(auth()->user()->isFleetProvider())
+                            <x-nav-link :href="route('fleet.dashboard')" :active="request()->routeIs('fleet.dashboard')">
+                                {{ __('Fleet Dashboard') }}
+                            </x-nav-link>
+                        @endif
+
+                        @if(auth()->user()->isCustomer())
+                            <x-nav-link :href="route('rentals.dashboard')" :active="request()->routeIs('rentals.dashboard')">
+                                {{ __('My Rentals') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+
+                    <x-nav-link :href="route('cars.index')" :active="request()->routeIs('cars.index')">
+                        {{ __('Available Cars') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -67,8 +93,34 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            @auth
+                @if(auth()->user()->isAdmin())
+                    <x-responsive-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
+                        {{ __('Admin Dashboard') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                @if(auth()->user()->isOwner())
+                    <x-responsive-nav-link :href="route('owner.dashboard')" :active="request()->routeIs('owner.dashboard')">
+                        {{ __('Owner Dashboard') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                @if(auth()->user()->isFleetProvider())
+                    <x-responsive-nav-link :href="route('fleet.dashboard')" :active="request()->routeIs('fleet.dashboard')">
+                        {{ __('Fleet Dashboard') }}
+                    </x-responsive-nav-link>
+                @endif
+
+                @if(auth()->user()->isCustomer())
+                    <x-responsive-nav-link :href="route('rentals.dashboard')" :active="request()->routeIs('rentals.dashboard')">
+                        {{ __('My Rentals') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
+
+            <x-responsive-nav-link :href="route('cars.index')" :active="request()->routeIs('cars.index')">
+                {{ __('Available Cars') }}
             </x-responsive-nav-link>
         </div>
 

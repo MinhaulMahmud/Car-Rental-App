@@ -16,11 +16,22 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Number -->
+        <!-- Phone Number -->
         <div class="mt-4">
-            <x-input-label for="number" :value="__('Number')" />
-            <x-text-input id="number" class="block mt-1 w-full" type="text" name="number" :value="old('number')" required autofocus autocomplete="name" />
+            <x-input-label for="number" :value="__('Phone Number')" />
+            <x-text-input id="number" class="block mt-1 w-full" type="text" name="number" :value="old('number')" required />
             <x-input-error :messages="$errors->get('number')" class="mt-2" />
+        </div>
+
+        <!-- Role Selection -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Register as')" />
+            <select id="role" name="role" class="block mt-1 w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500" required>
+                <option value="customer">Customer</option>
+                <option value="owner">Car Owner</option>
+                <option value="fleet_provider">Fleet Provider</option>
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Password -->

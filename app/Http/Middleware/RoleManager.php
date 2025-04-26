@@ -9,39 +9,30 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleManager
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next , $role): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        if(!Auth::check())
-        {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
         
-        $authUserRole = Auth::user()->role;
-        switch ($role) {
+        $userRole = Auth::user()->role;
+        
+        if ($userRole === $role) {
+            return $next($request);
+        }
+
+        // Redirect based on user's role
+        switch ($userRole) {
             case 'admin':
-                if($authUserRole == 0){
-                    return $next($request);
-                }
-                break;
-            case 'customer':
-                if($authUserRole == 1){
-                    return $next($request);
-                }
-                break;
-        }
-        switch ($authUserRole) {
-            case 0:
                 return redirect()->route('admin');
-                break;
-            case 1:
+            case 'owner':
+                return redirect()->route('owner.dashboard');
+            case 'fleet_provider':
+                return redirect()->route('fleet.dashboard');
+            case 'customer':
                 return redirect()->route('home');
-                break;
+            default:
+                return redirect()->route('home');
         }
-        return redirect()->route('login');
     }
 }

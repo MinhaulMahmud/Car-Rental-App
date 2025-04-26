@@ -32,8 +32,9 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'number' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'number' => ['required', 'string', 'max:20'],
+            'role' => ['required', 'string', 'in:customer,owner,fleet_provider'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -41,6 +42,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'number' => $request->number,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
@@ -48,6 +50,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        // Redirect based on user role
+        switch ($user->role) {
+            case 'owner':
+                return redirect()->route('owner.dashboard');
+            case 'fleet_provider':
+                return redirect()->route('fleet.dashboard');
+            default:
+                return redirect(RouteServiceProvider::HOME);
+        }
     }
 }

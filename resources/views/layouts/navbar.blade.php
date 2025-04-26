@@ -154,7 +154,22 @@
 								<a class="dropdown-item" href="{{ route('profile.edit') }}">
 									<i class="align-middle me-1" data-feather="user"></i> Profile
 								</a>
-								
+								@php
+									$user = Auth::user();
+								@endphp
+								@if($user && $user->role === 'admin')
+									<a class="dropdown-item" href="{{ route('admin.cars.create') }}">
+										<i class="align-middle me-1" data-feather="plus"></i> Create Car
+									</a>
+								@elseif($user && $user->role === 'fleet_provider')
+									<a class="dropdown-item" href="{{ route('fleet.cars.create') }}">
+										<i class="align-middle me-1" data-feather="plus"></i> Create Car
+									</a>
+								@elseif($user && $user->role === 'owner')
+									<a class="dropdown-item" href="{{ route('owner.cars.create') }}">
+										<i class="align-middle me-1" data-feather="plus"></i> Create Car
+									</a>
+								@endif
 							<div class="dropdown-divider"></div>
 								
 								<!-- Logout Form -->

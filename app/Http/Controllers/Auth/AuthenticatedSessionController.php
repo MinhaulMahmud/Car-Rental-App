@@ -29,14 +29,20 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $authUserRole = Auth::user()->role;
-        if ($authUserRole == 0) {
-            return redirect()->intended(route('admin', absolute: true));
+        // Get authenticated user
+        $user = Auth::user();
+        
+        // Redirect based on user role
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('admin');
+            case 'owner':
+                return redirect()->route('owner.dashboard');
+            case 'fleet_provider':
+                return redirect()->route('fleet.dashboard');
+            default:
+                return redirect()->intended(RouteServiceProvider::HOME);
         }
-        if ($authUserRole == 1) {
-            return redirect()->intended(route('home', absolute: true));
-        }
-
     }
 
     /**
