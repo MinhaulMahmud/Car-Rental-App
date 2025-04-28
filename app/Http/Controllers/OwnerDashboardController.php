@@ -23,12 +23,17 @@ class OwnerDashboardController extends Controller
         ]);
     }
 
+    private function userHasCar($user)
+    {
+        return Car::where('user_id', $user->id)->exists();
+    }
+
     public function create()
     {
         $user = Auth::user();
         
         // Check if user already has a car listed
-        if (Car::where('user_id', $user->id)->exists()) {
+        if ($this->userHasCar($user)) {
             return redirect()->route('owner.dashboard')->with('error', 'You can only list one car.');
         }
 
@@ -40,7 +45,7 @@ class OwnerDashboardController extends Controller
         $user = Auth::user();
         
         // Check if user already has a car listed
-        if (Car::where('user_id', $user->id)->exists()) {
+        if ($this->userHasCar($user)) {
             return redirect()->back()->with('error', 'You can only list one car.');
         }
 
@@ -54,17 +59,21 @@ class OwnerDashboardController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('cars', 'public');
-            $validated['image'] = $imagePath;
+        try {
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('cars', 'public');
+                $validated['image'] = $imagePath;
+            }
+
+            $validated['user_id'] = $user->id;
+            $validated['availability'] = true;
+
+            Car::create($validated);
+
+            return redirect()->route('owner.dashboard')->with('success', 'Car listed successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to create car listing. Please try again.');
         }
-
-        $validated['user_id'] = $user->id;
-        $validated['availability'] = true;
-
-        Car::create($validated);
-
-        return redirect()->route('owner.dashboard')->with('success', 'Car listed successfully.');
     }
 
     public function update(Request $request, Car $car)

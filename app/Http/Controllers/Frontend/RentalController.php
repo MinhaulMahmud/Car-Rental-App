@@ -36,7 +36,7 @@ class RentalController extends Controller
     // Validate the request data
     $request->validate([
         'start_date' => 'required|date|after_or_equal:today',
-        'end_date' => 'required|date|after:start_date',
+        'end_date' => 'required|date|after_or_equal:start_date', // changed here
     ]);
 
     // Find the car using the given ID
@@ -77,7 +77,7 @@ public function store(Request $request, $carId)
     // Validate the request data
     $request->validate([
         'start_date' => 'required|date|after_or_equal:today',
-        'end_date' => 'required|date|after:start_date',
+        'end_date' => 'required|date|after_or_equal:start_date', // changed here
     ]);
 
     // Find the car using the given ID

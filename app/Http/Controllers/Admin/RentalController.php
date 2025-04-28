@@ -27,19 +27,17 @@ class RentalController extends Controller
     {
         // Validate rental data
         $validatedData = $request->validate([
-            
             'car_id' => 'required|exists:cars,id',
-            'start_date' => 'required|date|after:today',
-            'end_date' => 'required|date|after:start_date',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         // Fetch the car to get the daily rent price
         $car = Car::findOrFail($request->car_id);
-
         // Calculate total rental days
-        $start_date = new \DateTime($request->start_date);
-        $end_date = new \DateTime($request->end_date);
-        $total_days = $end_date->diff($start_date)->days + 1;
+        $start_date = \Carbon\Carbon::parse($request->start_date)->startOfDay();
+        $end_date = \Carbon\Carbon::parse($request->end_date)->endOfDay();
+        $total_days = $start_date->diffInDays($end_date) + 1;
 
         // Calculate the total cost
         $total_cost = $total_days * $car->daily_rent_price;
