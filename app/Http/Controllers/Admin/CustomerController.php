@@ -47,15 +47,16 @@ class CustomerController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
-        // Cars by status
+        // Cars by status (only available and rented)
         $carStatus = Car::selectRaw('
             SUM(CASE WHEN availability = 1 THEN 1 ELSE 0 END) as available,
             SUM(CASE WHEN availability = 0 THEN 1 ELSE 0 END) as rented
         ')
-        ->get();
+        ->first()
+        ->toArray();
 
-        // Fetch all cars with their user for admin dashboard listing
-        $carsWithUsers = Car::with('user')->get();
+        // Fetch all cars with their user and rentals for admin dashboard listing
+        $carsWithUsers = Car::with(['user', 'rentals'])->get();
 
         return view('admin.admindashboard', compact(
             'totalCars',
