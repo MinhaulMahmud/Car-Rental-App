@@ -1,66 +1,199 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Car Rentals Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A multi-role car rental platform built with Laravel. This application allows customers to rent cars, car owners to list their vehicles, fleet providers to manage multiple cars, and admins to oversee the entire system.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
+- [Project Purpose](#project-purpose)
+- [Features](#features)
+- [User Roles & Permissions](#user-roles--permissions)
+- [Key Workflows](#key-workflows)
+- [Technical Stack](#technical-stack)
+- [Project Structure](#project-structure)
+- [Technical Skills Practiced](#technical-skills-practiced)
+- [Setup & Installation](#setup--installation)
+- [Usage](#usage)
+- [Customization](#customization)
+- [Security & Best Practices](#security--best-practices)
+- [Extending the Project](#extending-the-project)
+- [License](#license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project Purpose
+A robust, multi-role car rental web application:
+- **Customers** can browse and book cars.
+- **Car Owners** can list and manage a single car.
+- **Fleet Providers** can manage multiple cars.
+- **Admins** oversee all users, cars, and rentals.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Features
+- Role-based dashboards and permissions
+- Car listing and management (CRUD, images, availability)
+- Rental booking with date overlap prevention
+- Automated rental cost calculation
+- Email notifications for bookings
+- Rental status tracking (upcoming, ongoing, completed)
+- Revenue and statistics for owners, fleet providers, and admin
+- Profile management (update info, password, delete account)
+- Admin management of all users, cars, and rentals
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## User Roles & Permissions
+- **Customer:**
+  - Register, browse cars, book rentals
+  - View/manage bookings and rental history
+- **Owner:**
+  - Register, list one car, edit car details
+  - View rental history and revenue
+- **Fleet Provider:**
+  - Register, list/manage multiple cars
+  - Update car availability, view stats and revenue
+- **Admin:**
+  - Manage all users, cars, rentals
+  - View platform-wide stats, earnings, and user activity
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Key Workflows
+### Registration & Authentication
+- Register as customer, owner, or fleet provider
+- Role determines dashboard and permissions
+- Admins can be seeded or promoted in DB
 
-### Premium Partners
+### Car Listing & Management
+- Owners: Only one car per owner
+- Fleet Providers: Multiple cars
+- Car CRUD (create, read, update, delete) with image upload
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Booking & Rental Flow
+- Customers select car, pick dates, and book
+- System checks for availability (no overlapping rentals)
+- Rental record created, cost calculated, email sent
+- Customers can view/cancel upcoming rentals
 
-## Contributing
+### Admin Management
+- View/manage all users, cars, rentals
+- Edit/delete users and cars
+- View rental history for any user
+- Earnings breakdown by role (admin, owner, fleet provider)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Technical Stack
+- **Backend:** Laravel (PHP 8.1+)
+- **Frontend:** Blade templates, Bootstrap 5
+- **Database:** MySQL (configurable)
+- **Email:** SMTP (configurable in .env)
+- **Assets:** Vite, Tailwind, npm
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Project Structure
+- `app/Models/` – Eloquent models: User, Car, Rental
+- `app/Http/Controllers/` – Controllers for each role and feature
+- `app/Mail/` – Mailable for booking confirmation
+- `resources/views/` – Blade templates for all pages and dashboards
+- `routes/web.php` – All web routes, grouped by role
+- `database/migrations/` – DB schema for users, cars, rentals, etc.
+- `database/seeders/` – Demo data and role seeding
+- `public/` – Entry point, assets, car images
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
+
+## Technical Skills Practiced
+- Practiced REST API integration and route structuring (web.php, api.php)
+- Implemented role-based access control using Laravel middleware
+- Used Eloquent ORM for database relationships and queries
+- Practiced file upload and storage management (car images)
+- Built and customized Blade components and layouts
+- Practiced form validation and error handling
+- Implemented email notifications using Laravel Mailable
+- Used Laravel seeders and factories for test/demo data
+- Practiced pagination and data presentation in dashboards
+- Used Laravel’s authentication scaffolding and password management
+- Practiced database migrations and schema design
+- Practiced MVC architecture and separation of concerns
+- Used version control (git) and dependency management (composer, npm)
+
+---
+
+## Setup & Installation
+### Prerequisites
+- PHP >= 8.1
+- Composer
+- MySQL or compatible database
+- Node.js & npm (for frontend assets)
+
+### Installation Steps
+1. **Clone repo & install dependencies:**
+   ```bash
+   git clone https://github.com/MinhaulMahmud/Car-Rental-App.git
+   cd car-rentals
+   composer install
+   npm install && npm run build
+   ```
+2. **Configure .env:**
+   ```bash
+   cp .env.example .env
+   # Edit .env for your DB, mail, and app settings
+   ```
+3. **Generate app key:**
+   ```bash
+   php artisan key:generate
+   ```
+4. **Run migrations & seeders:**
+   ```bash
+   php artisan migrate --seed
+   ```
+5. **Link storage for images:**
+   ```bash
+   php artisan storage:link
+   ```
+6. **Start server:**
+   ```bash
+   php artisan serve
+   ```
+
+---
+
+## Usage
+- `/` – Homepage, car listings
+- `/register` – Register as any role
+- `/admin/dashboard` – Admin panel
+- `/owner/dashboard` – Owner dashboard
+- `/fleet/dashboard` – Fleet provider dashboard
+- `/rentals/dashboard` – Customer dashboard
+
+---
+
+## Customization
+- **Roles/Permissions:** Update in User model and middleware
+- **Commission/Earnings:** Logic in controllers (e.g., admin gets % of owner/fleet rentals)
+- **UI:** Edit Blade templates in `resources/views/`
+- **Mail:** Configure SMTP in `.env`
+
+---
+
+## Security & Best Practices
+- Uses Laravel’s built-in authentication and CSRF protection
+- Role-based middleware for route protection
+- Input validation on all forms
+- Passwords hashed using Laravel’s default
+
+---
+
+## Extending the Project
+- Add APIs for mobile apps
+- Add payment gateway integration
+- Add more analytics/statistics for admins
+- Enhance notifications (SMS, push)
+
+---
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced under the MIT license.
