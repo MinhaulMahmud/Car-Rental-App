@@ -132,7 +132,7 @@
                         <thead>
                             <tr>
                                 <th>User Name</th>
-                                <th>User Email</th>
+                                <th>Vendor</th>
                                 <th>Car Name</th>
                                 <th>Brand</th>
                                 <th>Model</th>

@@ -14,6 +14,7 @@
                         <th>Type</th>
                         <th>Daily Rent Price</th>
                         <th>Availability</th>
+                        <th>Listed By</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,6 +28,13 @@
                         <td>{{ $car->car_type }}</td>
                         <td>${{ $car->daily_rent_price }}</td>
                         <td>{{ $car->availability }}</td>
+                        <td>
+                            @if($car->user)
+                                {{ $car->user->name }} ({{ ucfirst(str_replace('_', ' ', $car->user->role)) }})
+                            @else
+                                N/A
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('admin.cars.edit', $car->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('admin.cars.destroy', $car->id) }}" method="POST" class="d-inline">

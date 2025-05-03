@@ -74,11 +74,11 @@ class CustomerController extends Controller
         ));
     }
 
-    // Display a listing of the customers
+    // Display a listing of all users except admin
     public function index()
     {
-        $customers = User::where('role', 'customer')->get();
-        return view('admin.customers.index', compact('customers'));
+        $users = User::where('role', '!=', 'admin')->get();
+        return view('admin.customers.index', compact('users'));
     }
 
     // Show the form for editing the customer details
